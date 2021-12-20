@@ -1,0 +1,197 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #F7F7F7;
+}
+
+.head {
+    width: 100%;
+    height: 200px;
+    background: #F23F5C;
+    color: #FFFFFF;
+    overflow: hidden;
+}
+
+.head_title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 25px;
+}
+
+.back {
+    width: 8px;
+    height: 15px;
+    position: absolute;
+    left: 20px;
+}
+
+.head_box {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding: 0 53px;
+}
+
+.head_equity {
+    text-align: center;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 15px;
+    margin-top: -31px;
+}
+
+.item {
+    width: 100%;
+    background: #FFFFFF;
+    border-radius: 5px;
+}
+
+.item_title {
+    font-size: 16px;
+    color: #333333;
+    margin-top: 15px;
+    margin-left: 13px;
+}
+
+.item_box {
+    padding-left: 35px;
+}
+
+.item_msg {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #EAEAEA;
+    height: 42px;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.buy_box {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-right: 13px;
+}
+
+.buy_box_btn {
+    width: 17px;
+    height: 17px;
+    background: #FFFFFF;
+    border: 1px solid #D1D1D1;
+    border-radius: 3px;
+    text-align: center;
+    color: #999999;
+    font-size: 21px;
+    line-height: 14px;
+}
+
+.buy_num {
+    width: 45px;
+    height: 17px;
+    background: #FFFFFF;
+    border: 1px solid #D1D1D1;
+    border-radius: 2px;
+    text-align: center;
+    line-height: 17px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.prompt {
+    display: flex;
+    margin-top: 9px;
+    margin-left: 11px;
+    margin-bottom: 12px;
+}
+
+.prompt_img {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+}
+
+.item_you {
+    width: 6px;
+    height: 10px;
+    margin-left: 8px;
+}
+
+.yuan {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #999999;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 8px;
+}
+
+.tick {
+    width: 20px;
+    height: 20px;
+}
+
+.input {
+    border: 0;
+    outline: none;
+    width: 100%;
+    direction: rtl;
+}
+
+.upload {
+    width: 53px;
+    height: 53px;
+    margin-top: 12px;
+    margin-bottom: 22px;
+}
+
+.combined {
+    width: 100%;
+    height: 51px;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 1px 0px #E8E8E8;
+    display: flex;
+    margin-top: 34px;
+}
+
+.combined_box1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    line-height: 51px;
+}
+
+.combined_box2 {
+    background-color: #F23F5C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    line-height: 51px;
+}
+
+.pay_box {
+    position: fixed;
+    top: 50%;
+    left: 30%;
+    background-color: bisque;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}

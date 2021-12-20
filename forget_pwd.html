@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="static/css/forget_pwd.css" rel="stylesheet" type="text/css">
+    <title>忘记密码</title>
+</head>
+
+<body>
+    <div class="app" style="overflow: hidden;">
+        <div class="head">
+            <img @click="back()" class="back" src="static/image/back.png">
+            <div>忘记密码</div>
+        </div>
+        <div class="content">
+
+            <div style="font-size: 14px;margin-top: 22px;">手机号</div>
+            <div class="item">
+                <input v-model="phone" class="input" placeholder="请输入您的手机号">
+            </div>
+            <div style="font-size: 14px;margin-top: 22px;">短信验证</div>
+            <div class="item">
+                <input v-model="code" class="input" placeholder="请输入短信验证码">
+                <div v-if="!time_switch" class="btn-send" @click="sendCode()">发送验证码</div>
+                <div v-if="time_switch" class="btn-send">{{time}}s</div>
+            </div>
+            <div style="font-size: 14px;margin-top: 22px;">密码</div>
+            <div class="item">
+                <input v-if="!choose" v-model="pwd" class="input" type="password" placeholder="6-20位字母和数字">
+                <input v-if="choose" v-model="pwd" class="input" type="text" placeholder="6-20位字母和数字">
+                <img @click="look()" v-if="!choose" class="input-ess" src="static/image/ess.png">
+                <img @click="look()" v-if="choose" class="input-ess" src="static/image/ess2.png">
+            </div>
+            <div style="font-size: 14px;margin-top: 22px;">确认密码</div>
+            <div class="item">
+                <input v-if="!choose" v-model="pwd2" class="input" type="password" placeholder="6-20位字母和数字">
+                <input v-if="choose" v-model="pwd2" class="input" type="text" placeholder="6-20位字母和数字">
+                <img @click="look()" v-if="!choose" class="input-ess" src="static/image/ess.png">
+                <img @click="look()" v-if="choose" class="input-ess" src="static/image/ess2.png">
+            </div>
+
+        </div>
+        <div class="bottom">
+            <div @click="submit()" class="reg">提交</div>
+        </div>
+
+    </div>
+
+</body>
+<script type="text/javascript" src="static/js/jquery-3.1.1.min.js"></script>
+<script src="static/js/vue.js"></script>
+<script src="static/js/vue.min.js"></script>
+<script charset="utf-8" src="static_new/js/dialog.min.js"></script>
+<link rel="stylesheet" href="static_new/css/public.css">
+<script src="static/js/helper.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '.app',
+        data: {
+            phone: '',
+            code: '',
+            pwd: '',
+            pwd2: '',
+            invita: '',
+            time: 60,
+            Interval: '',
+            time_switch: false,
+            choose: false,
+        },
+        mounted: function() {
+
+        },
+        methods: {
+            submit() {
+                if (!this.phone) {
+                    $(document).dialog({
+                        infoText: '请输入手机号'
+                    });
+                    return;
+                }
+                if (!this.code) {
+                    $(document).dialog({
+                        infoText: '请输入验证码'
+                    });
+                    return;
+                }
+                if (!this.pwd || !this.pwd2) {
+                    $(document).dialog({
+                        infoText: '请输入密码'
+                    });
+                    return;
+                }
+                if (this.pwd != this.pwd2) {
+                    $(document).dialog({
+                        infoText: '两次密码不一致'
+                    });
+                    return;
+                }
+                let data = {
+                    mobile: this.phone,
+                    code: this.code,
+                    password: this.pwd
+                }
+                var loading = null;
+                loading = $(document).dialog({
+                    type: 'notice',
+                    infoIcon: 'static_new/img/loading.gif',
+                    infoText: '正在加载中',
+                    autoClose: 0
+                });
+                http_api.http_send('user/forget', data, 'POST',
+                    (res) => {
+                        loading.close();
+                        $(document).dialog({
+                            infoText: res.msg
+                        });
+                        if (res.status) {
+                            setTimeout(() => {
+                                this.back();
+                            }, 1500);
+
+                        }
+                    })
+            },
+            back() {
+                window.history.go(-1)
+            },
+            look() {
+                this.choose = !this.choose;
+            },
+            sendCode() {
+                if (!this.phone) {
+                    $(document).dialog({
+                        infoText: '请输入手机号'
+                    });
+                    return;
+                }
+                var loading = null;
+                loading = $(document).dialog({
+                    type: 'notice',
+                    infoIcon: 'static_new/img/loading.gif',
+                    infoText: '正在加载中',
+                    autoClose: 0
+                });
+                http_api.http_send('user/sendSms', {
+                        mobile: this.phone
+                    }, 'POST',
+                    (res) => {
+                        loading.close();
+                        $(document).dialog({
+                            infoText: res.msg
+                        });
+                    })
+                this.time_switch = true;
+                this.Interval = setInterval(() => {
+                    if (this.time == 0) {
+                        this.time_switch = false;
+                        clearInterval(this.Interval);
+                        this.time = 60;
+                        return;
+                    }
+                    this.time--
+                }, 1000)
+            }
+        },
+        created() {
+
+        }
+    })
+</script>
+
+</html>

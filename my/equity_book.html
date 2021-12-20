@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="../static/css/equity_book.css" rel="stylesheet" type="text/css">
+    <title>股权证书</title>
+</head>
+
+<body>
+    <div class="app" style="overflow: hidden;">
+        <div class="head">
+            <img @click="back()" class="back" src="../static/image/back.png">
+            <div>股权证书</div>
+        </div>
+        <div class="book">
+            <img class="label" src="../static/book/label.png">
+            <div class="label2">我要为中控物联代言</div>
+            <div class="title">尊敬的{{user.nickname}}股东</div>
+            <div class="contnt">
+                恭喜您成功成为我们【中控物联集团】的原始股东，当前您拥有【中控物联集团】{{list.ProBuy.share}}股原始股，可以享受拥有股权每日{{list.Pro.jyrsy}}股权分红收益，同时享受公司上市后10-50倍以上的原始股价的收益分红
+            </div>
+            <div class="label3">特此证明！</div>
+            <img class="yin" src="../static/book/yinzhang.png">
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="../static/js/jquery-3.1.1.min.js"></script>
+<script src="../static/js/vue.js"></script>
+<script src="../static/js/vue.min.js"></script>
+<script charset="utf-8" src="../static_new/js/dialog.min.js"></script>
+<link rel="stylesheet" href="../static_new/css/public.css">
+<script src="../static/js/helper.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '.app',
+        data: {
+            id: '',
+            list: '',
+            user: '',
+        },
+        mounted: function() {
+            this.user = JSON.parse(window.localStorage.getItem("user2"));
+            console.log(this.user)
+            this.id = http_api.GetQueryString('id')
+            var loading = null;
+            loading = $(document).dialog({
+                type: 'notice',
+                infoIcon: '../static_new/img/loading.gif',
+                infoText: '正在加载中',
+                autoClose: 0
+            });
+            http_api.http_send('user/agreement', {
+                    sgin: this.id
+                }, 'POST',
+                (res) => {
+                    loading.close();
+                    if (res.status) {
+                        this.list = res.data
+                    }
+                });
+        },
+        methods: {
+
+            back() {
+                window.history.go(-1)
+            },
+            look() {
+                this.choose = !this.choose;
+            },
+        },
+        created() {
+
+        }
+    })
+</script>
+
+</html>

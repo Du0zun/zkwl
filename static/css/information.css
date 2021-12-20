@@ -1,0 +1,72 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.head {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #EBEBEB;
+    height: 40px;
+    position: relative;
+}
+
+.back {
+    width: 8px;
+    height: 15px;
+    position: absolute;
+    left: 20px;
+}
+
+.label_box {
+    display: flex;
+    margin-top: 13px;
+    flex-wrap: wrap;
+    padding: 0 16px;
+}
+
+.label {
+    height: 21px;
+    background: #EDEDED;
+    border-radius: 10px;
+    font-size: 13px;
+    text-align: center;
+    width: 68px;
+    line-height: 21px;
+    margin-right: 4px;
+}
+
+.label_choose {
+    background: #EAF4FD;
+    color: #10518C;
+}
+
+.content {
+    padding: 0 17px;
+    margin-top: 30px;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 42px;
+}
+
+.msg {
+    font-size: 16px;
+    margin-right: 18px;
+    margin-bottom: 12px;
+}
+
+.info {
+    color: #9A9A9A;
+    font-size: 12px;
+}
+
+.img {
+    width: 111px;
+    height: 66px;
+    border-radius: 5px;
+}

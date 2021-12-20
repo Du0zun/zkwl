@@ -1,0 +1,94 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.head {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #EBEBEB;
+    height: 40px;
+    position: relative;
+}
+
+.back {
+    width: 8px;
+    height: 15px;
+    position: absolute;
+    left: 20px;
+}
+
+.content {
+    padding-left: 19px;
+}
+
+.item {
+    border-bottom: 1px solid #EBEBEB;
+    height: 30px;
+    padding-left: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.input {
+    border: 0;
+    outline: none;
+    width: 100%;
+}
+
+.btn-send {
+    font-size: 14px;
+    color: #EC0022;
+    width: 108px;
+    text-align: center;
+}
+
+.input-ess {
+    width: 16px;
+    height: 11px;
+    margin-right: 14px;
+}
+
+.box {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-top: 11px;
+    color: #999999;
+    font-size: 13px;
+}
+
+.yuan {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #999999;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.tick {
+    width: 20px;
+    height: 20px;
+}
+
+.bottom {
+    display: flex;
+    justify-content: center;
+}
+
+.reg {
+    width: 345px;
+    height: 44px;
+    background: #FF623E;
+    border-radius: 22px;
+    text-align: center;
+    line-height: 44px;
+    font-size: 16px;
+    color: #FFFFFF;
+    margin-top: 46px;
+}

@@ -1,0 +1,177 @@
+.fund_box {
+    width: 100%;
+    height: 102px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 4px 0px rgba(153, 153, 153, 0.44);
+    border-radius: 5px;
+    display: flex;
+}
+
+.goods {
+    width: 55px;
+    height: 55px;
+    margin-top: 17px;
+    margin-left: 12px;
+    margin-right: 15px;
+}
+
+.fund_box_title {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding-right: 13px;
+}
+
+.buy_btn {
+    width: 70px;
+    height: 25px;
+    background: #F23F5C;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-size: 13px;
+    text-align: center;
+    line-height: 25px;
+}
+
+.price_box {
+    display: flex;
+    text-align: center;
+    color: #999999;
+    font-size: 13px;
+}
+
+.info_title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bulletin {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+    display: none;
+}
+
+.bulletin2 {
+    display: inline;
+}
+
+.mask {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bulletin_box {
+    position: relative;
+    width: 240px;
+    background: #FFFFFF;
+    border-radius: 5px;
+}
+
+.gonggao {
+    width: 219px;
+    height: 100px;
+}
+
+.bull_sitle {
+    font-size: 25px;
+    font-weight: bold;
+    color: #000000;
+    text-align: center;
+}
+
+.bulletin_exit {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: -22px;
+    right: -22px;
+}
+
+.bulletin_content {
+    font-size: 13px;
+    font-weight: 400;
+    color: #000000;
+    margin-top: 5px;
+    padding: 0 15px;
+    margin-bottom: 15px;
+}
+
+.bulletin3 {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+    display: none;
+}
+
+.bulletin4 {
+    display: inline;
+}
+
+.mask3 {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bulletin_box3 {
+    position: relative;
+    width: 251px;
+    height: 275px;
+    background: #FFFFFF;
+    border-radius: 5px;
+}
+
+.gonggao3 {
+    width: 130px;
+    height: 119px;
+    margin-top: 8px;
+}
+
+.bull_sitle3 {
+    font-size: 25px;
+    font-weight: bold;
+    color: #000000;
+    text-align: center;
+}
+
+.bulletin_exit3 {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: -22px;
+    right: -22px;
+}
+
+.bulletin_content3 {
+    font-size: 13px;
+    font-weight: 400;
+    color: #000000;
+    margin-top: 5px;
+    padding: 0 15px;
+    text-align: center;
+}
+
+.bulletin_xian3 {
+    width: 239px;
+    height: 1px;
+    background: #EBEBEB;
+    margin-top: 28px;
+}
+
+.bulletin_btn3 {
+    width: 125px;
+    text-align: center;
+    margin-top: 10px;
+}

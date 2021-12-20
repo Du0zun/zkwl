@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/dialog.min.js"></script>
+    <script src="static/js/common.js"></script>
+    <link href="static/css/377.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/public.css">
+    <link rel="stylesheet" href="static/css/layer.css">
+    <script src="static/js/layer.js"></script>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        body {
+            padding: 0;
+        }
+        
+        #app {
+            height: 100vh;
+            font-size: 12px;
+            background-color: #F4F8FB;
+        }
+        
+        .title1 {
+            background-color: #f03455;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            color: #FFFFFF;
+            justify-content: center;
+            position: relative;
+            font-size: 16px;
+        }
+        
+        .title1 .icon {
+            display: inline-block;
+            background-image: url(static/image/left.png);
+            width: 20px;
+            height: 20px;
+            background-size: 100% 100%;
+            background-position: center;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 10px;
+        }
+        
+        .title1 .text {
+            text-align: center;
+        }
+        
+        .title1 .text-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 10px;
+            font-size: 14px;
+        }
+        
+        .icon1,
+        .icon2 {
+            display: block;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .icon1 {
+            right: 13%;
+            background-image: url(static/image/call.png);
+            background-size: 100% 100%;
+        }
+        
+        .icon2 {
+            right: 4%;
+            background-image: url(static/image/share.png);
+            background-size: 100% 100%;
+        }
+        
+        .main {
+            height: calc(100vh - 90px);
+            overflow: auto;
+        }
+        
+        .header1 {
+            height: 100px;
+            background-color: #FFFFFF;
+        }
+        
+        .h-1 {
+            display: flex;
+        }
+        
+        .h-1>div {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+        }
+        
+        .h-1-t {
+            color: darkgray;
+        }
+        
+        .t-red {
+            color: #F03455;
+        }
+        
+        .h-1-t1-1 {
+            font-size: 25px;
+            font-weight: bold;
+        }
+        
+        .h-2 {
+            display: flex;
+            padding: 0 10px;
+        }
+        
+        .h-2>div {
+            flex: 1;
+        }
+        
+        .h-2-1>span:nth-of-type(1) {
+            padding: 5px;
+            background-color: #F6F6F7;
+            color: darkgray;
+        }
+        
+        .h-2-1>span:nth-of-type(2) {
+            padding: 5px;
+            background-color: #F6F6F7;
+            color: #67bcb7;
+        }
+        
+        .h-2-2>span {
+            padding: 5px;
+            background-color: #FCF2F3;
+            color: #A99592;
+        }
+        
+        .echart {
+            margin-top: 10px;
+            background-color: #FFFFFF;
+        }
+        
+        .e-tabbar {
+            display: flex;
+            height: 40px;
+            line-height: 40px;
+            font-size: 14px;
+            border-bottom: 1px solid #DDDDDD;
+        }
+        
+        .e-tabbar>div {
+            flex: 1;
+            text-align: center;
+            height: 100%;
+            color: #A9A9A9;
+        }
+        
+        .e-tabbar>div.e-active {
+            color: #F03455;
+        }
+        
+        .e-title {
+            height: 40px;
+            line-height: 40px;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+            color: #A9A9A9;
+        }
+        
+        #y-echart {
+            width: 100%;
+            height: 200px;
+            margin: 0 auto;
+        }
+        
+        .y-tabbar {
+            display: flex;
+            height: 40px;
+            line-height: 50px;
+            background-color: #FAFAFA;
+        }
+        
+        .y-tabbar>div {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .y-table {
+            margin-top: 10px;
+            background-color: #FFFFFF;
+        }
+        
+        .y-1 {
+            display: flex;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 10px;
+        }
+        
+        .y-1>div {
+            flex: 1;
+            text-align: center;
+            height: 100%;
+            position: relative;
+        }
+        
+        .y-1>div.active {
+            color: #F03455;
+        }
+        
+        .y-1>div.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 2px;
+            background-color: #F03455;
+            border-radius: 3px;
+        }
+        
+        .table {
+            width: 100%;
+            text-align: center;
+            color: #A9A9A9;
+        }
+        
+        .t-green {
+            color: green;
+        }
+        
+        .table td,
+        .table th {
+            height: 30px;
+            line-height: 30px;
+        }
+        
+        .y-btn {
+            height: 49px;
+            display: flex;
+            background-color: #FFFFFF;
+            border-top: 1px solid #DDDDDD;
+        }
+        
+        .y-btn>div {
+            flex: 1;
+            height: 100%;
+        }
+        
+        .y-btn-1 {
+            display: flex;
+        }
+        
+        .y-btn-1>div {
+            flex: 1;
+            text-align: center;
+            color: darkgray;
+        }
+        
+        .y-btn-1>div>img {
+            width: 25px;
+            height: 25px;
+        }
+        
+        .y-btn-2,
+        .y-btn-3 {
+            line-height: 49px;
+            text-align: center;
+            font-size: 18px;
+        }
+        
+        .y-btn-3 {
+            background-color: #F03455;
+            color: #FFFFFF;
+        }
+        
+        #y-popup {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, .3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .y-p-n {
+            width: 80%;
+            height: 350px;
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .y-icon1 {
+            display: block;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .y-icon1 {
+            right: 5%;
+            background-image: url(http://sysad.51wgx.com/index/rot_order/img/call.png);
+            background-size: 100% 100%;
+        }
+        
+        .y-p-m>div {
+            height: 35px;
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            justify-content: space-between;
+            padding: 0 10px;
+            border-bottom: 1px solid #DDDDDD;
+        }
+        
+        .y-tag {
+            color: #37a4d7;
+            border-radius: 5px;
+            border: 1px solid #37A4D7;
+            font-weight: normal;
+            padding: 1px 5px;
+            margin-right: 5px;
+        }
+        
+        .y-p-b {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .y-p-b-y {
+            width: 80%;
+            height: 40px;
+            background-color: #37A4D7;
+            text-align: center;
+            line-height: 40px;
+            color: #FFFFFF;
+            border-radius: 10px;
+            background-color: #F03455;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="title1"><a href="#" onclick="javascript :history.back(-1);"><span class="icon"></span></a>
+            <div class="text">
+                <p>华夏移动互联混合（QDII）</p>
+            </div>
+        </div>
+        <div class="main">
+            <header class="header1">
+                <section class="h-1">
+                    <div>
+                        <p class="h-1-t">产品跌幅</p>
+                        <p class="h-1-t1 t-red"><span class="h-1-t1-1">+2.<label id="raf6"></label></span>%</p>
+                    </div>
+                    <div>
+                        <p class="h-1-t">单位净值</p>
+                        <p class="h-1-t1"><span class="h-1-t1-1">2.<label id="raf7"></label></span></p>
+                    </div>
+                    <div>
+                        <p class="h-1-t">累计净值</p>
+                        <p class="h-1-t1"><span class="h-1-t1-1">2.<label id="raf8"></label></span></p>
+                    </div>
+                </section>
+                <section class="h-2">
+                    <div class="h-2-1"><span>混合型</span><span>中风险R3</span></div>
+                    <div class="h-2-2"><span>近一个月收益率同类排名1/24</span></div>
+                </section>
+            </header>
+            <div class="echart">
+                <section class="e-tabbar">
+                    <div class="e-active">华夏移动互联混合（QDII）</div>
+                </section>
+                <section class="e-title"><span></span></section>
+                <section id="y-echart"></section>
+            </div>
+            <div class="y-table">
+                <section class="y-1">
+                    <div class="active">最新成交记录</div>
+                </section>
+                <table class="table" border="0" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div id="rad1"></div>
+                            </td>
+                            <td>购买华夏移动互联混合（QDII）</td>
+                            <td class="t-red">赚取<label id="raf1"></label>元</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="rad2"></div>
+                            </td>
+                            <td>购买华夏移动互联混合（QDII）</td>
+                            <td class="t-red">赚取<label id="raf2"></label>元</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="rad3"></div>
+                            </td>
+                            <td>购买华夏移动互联混合（QDII）</td>
+                            <td class="t-red">赚取<label id="raf3"></label>元</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="rad4"></div>
+                            </td>
+                            <td>购买华夏移动互联混合（QDII）</td>
+                            <td class="t-red">赚取<label id="raf4"></label>元</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="rad5"></div>
+                            </td>
+                            <td>购买华夏移动互联混合（QDII）</td>
+                            <td class="t-red">赚取<label id="raf5"></label>元</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="y-btn">
+            <div class="y-btn-1">
+                <div onclick="location.href='/index/order/index.html?status=5'" class="follow"><img src="static/picture/follow.png">
+                    <p>申购记录</p>
+                </div>
+                <div onclick="location.href='/index/support/index?from=pcwin'" class="msg"><img src="static/picture/discuss.png">
+                    <p>在线客服</p>
+                </div>
+            </div>
+            <div class="y-btn-3" id="autoStart">一键申购</div>
+        </div>
+    </div>
+    <div id="y-popup" style="display:none">
+        <div class="y-p-n">
+            <div class="title1">
+                <!--<span class="icon tabs_btn1"></span>-->
+                <div class="text">
+                    申购确认
+                </div>
+                <a href="#" class="y-icon1"></a>
+            </div>
+            <div class="y-p-m">
+                <div><span>基金名称</span><span id="otitle">华夏上证50ETF联接A</span></div>
+                <div><span>申购金额(元)</span><span id="ototal">1.00</span></div>
+                <div><span>结算时间</span><span><b class="y-tag">8</b>小时</span></div>
+                <div><span>申购费</span><span id="yongjin">0.00</span></div>
+                <div><span>申购时间</span><span id="otime">正常</span></div>
+                <div><span>申购编号</span><span id="oid">正常</span></div>
+                <div><span style="text-align:center">本次交易由<img src="http://sysad.51wgx.com/index/rot_order/tpy.png" height="15" width="60">中国太平洋保险（中国)有限公司承保</span></div>
+            </div>
+            <div class="y-p-b">
+                <div class="y-p-b-y tabs_btn2">
+                    确认
+                </div>
+            </div>
+        </div>
+    </div><span style="display: none;"><audio id="audio" src="/static_new/img/hongbao.mp3" controls="controls"></audio></span>
+    <script>
+        $(function() {
+
+            showTime();　
+            setInterval(showTime, 2000);　
+            function showTime() {
+                $('#rad1').html(mask(getMoble()))
+                $('#rad2').html(mask(getMoble()))
+                $('#rad3').html(mask(getMoble()))
+                $('#rad4').html(mask(getMoble()))
+                $('#rad5').html(mask(getMoble()))
+
+                $('#raf1').html(getmonry())
+                $('#raf2').html(getmonry())
+                $('#raf3').html(getmonry())
+                $('#raf4').html(getmonry())
+                $('#raf5').html(getmonry())
+                $('#raf6').html(getmonryo())
+                $('#raf7').html(getmonryo())
+                $('#raf8').html(getmonryo())
+            }
+
+
+
+            function getmonry() {
+                Max = 20000.00;
+                Min = 100.00;
+                var Range = Max - Min;
+                var Rand = Math.random();
+                var num = Min + Math.floor(Rand * Range); //舍去
+                return num;
+            }
+
+            function getmonryo() {
+                Max = 999.00;
+                Min = 100.00;
+                var Range = Max - Min;
+                var Rand = Math.random();
+                var num = Min + Math.floor(Rand * Range); //舍去
+                return num;
+            }
+
+            function getMoble() {
+
+                var prefixArray = new Array("130", "131", "132", "133", "135", "137", "138", "170", "187", "189");
+
+                var i = parseInt(10 * Math.random());
+
+                var prefix = prefixArray[i];
+
+                for (var j = 0; j < 8; j++) {
+
+                    prefix = prefix + Math.floor(Math.random() * 10);
+
+                }
+
+                return prefix;
+
+            }
+
+            function mask(tel) {
+                tel = "" + tel;
+                var ary = tel.split("");
+                ary.splice(3, 4, "****");
+                var tel1 = ary.join("");
+                console.log(tel1);
+                return tel1;
+            }
+
+
+
+        })
+    </script>
+    <script src="static/js/echart.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var series = {
+            type: 'line',
+            data: []
+        };
+        var x = [];
+        var myChart = echarts.init(document.getElementById('y-echart'));
+
+        function randomData() {
+            var value = (Math.floor(Math.random() * (100 - 1) + 1));
+            var now = new Date();
+            return {
+                value: Math.round(value),
+                time: [now.getHours() + ':' + (now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes()) + ':' + (now.getSeconds() < 10 ? '0' + now.getSeconds() : now.getSeconds()) + ' ' + (now.getMonth() + 1), now.getDate()].join('-')
+            }
+        }
+        var option = {
+            xAxis: {
+                type: 'category',
+                data: x,
+                axisLabel: {
+                    formatter: function(value) {
+                        return value.split(' ').join('\n')
+                    }
+                },
+                splitLine: {
+                    show: false
+                },
+                axisLine: {
+                    show: false,
+                    onZero: true,
+                },
+                axisTick: {
+                    show: false,
+                }
+            },
+            yAxis: {
+                type: 'value',
+                boundaryGap: [0, '100%'],
+                splitNumber: 2,
+                splitLine: {
+                    show: false
+                },
+                axisLine: {
+                    show: false,
+                    onZero: true,
+                },
+                axisTick: {
+                    show: false,
+                },
+            },
+            series
+        };
+        setInterval(function() {
+            for (var i = 0; i < 1; i++) {
+                if (x.length > 10) {
+                    x.shift();
+                    series.data.shift()
+                }
+                series.data.push(randomData().value);
+                x.push(randomData().time)
+            }
+            myChart.setOption(option);
+        }, 1000);
+    </script>
+    <script type="text/javascript" src="static/js/manifest.3ad1d5771e9b13dbdad2.js"></script>
+    <script>
+        var cid = "1";
+        var oid = '';
+        var add_id = '';
+        var countdown = 5,
+            tt1 = 2478;
+        var audio = document.getElementById("audio");
+        $(function() {
+
+            $('#autoStart').click(function() {
+
+                if ($('#autoStart').text() == '一键申购') {
+                    countdown = 5;
+                    $('#autoStart').text('申购中');
+                    start()
+                }
+
+            })
+        });
+
+        function palySong(wi) {
+            audio.load();
+            stopSong();
+            audio.play();
+            if (wi == 0) {
+                audio.pause();
+            }
+        }
+
+        function stopSong() {
+            audio.pause();
+        }
+
+        function qdSuccess(oid) {
+            $('#y-popup').show();
+            $.ajax({
+                url: "/index/order/order_info",
+                type: "POST",
+                dataType: "JSON",
+                data: {
+                    id: oid
+                },
+                success: function(res) {
+                    console.log(res)
+                    var data = res.data;
+                    if (res.code == 0) {
+                        $('#otime').html(data.addtime)
+                        $('#oid').html(data.oid)
+                        $('#otitle').html(data.goods_name)
+                        $('#oimg').attr('src', data.goods_pic)
+                        $('#oprice').html(data.goods_price)
+                        $('#onum').html(data.goods_count)
+                        $('#ototal').html('¥ ' + data.num)
+                        $('#yongjin').html('' + data.commission)
+                        var yuji = (data.commission * 1 + data.num * 1);
+                        yuji = yuji.toFixed(2);
+                        $('#yuji').html(yuji)
+                    }
+                },
+                error: function(err) {
+                    console.log(err)
+                }
+            })
+        }
+
+        function start() {
+            console.log(countdown)
+            if (countdown <= 0) {
+                //$('#orderDetail .van-overlay').show();
+                //------------------------------------------------------------------
+                loading = $(document).dialog({
+                    type: 'notice',
+                    infoIcon: '/static_new/img/loading.gif',
+                    infoText: '正在加载中',
+                    autoClose: 0
+                });
+                $.ajax({
+                    url: "/index/rot_order/submit_order.html" + '?cid=' + cid + '&m=' + Math.random(),
+                    timeout: 5000,
+                    type: 'POST',
+
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        $('#autoStart').text('一键申购');
+                        loading.close();
+                        $(document).dialog({
+                            infoText: "网络不稳定,请您在信号较好的地方再试!",
+                            autoClose: 2000
+                        });
+                    },
+                    success: function(data) {
+                        // var data = JSON.parse(data);
+                        $('#autoStart').text('申购成功');
+                        if (data.code == 1) {
+                            loading.close();
+                            $(document).dialog({
+                                infoText: data.info,
+                                autoClose: 2000
+                            });
+                            //nextclick();
+                        } else if (data.code == 0) {
+                            loading.close();
+                            palySong(1);
+                            sessionStorage.setItem('oid', data.oid);
+                            $(document).dialog({
+                                infoText: data.info
+                            });
+                            qdSuccess(data.oid);
+                            oid = data.oid;
+                            add_id = data.add_id;
+                        } else {
+                            loading.close();
+                            if (data.info) {
+                                $(document).dialog({
+                                    infoText: data.info,
+                                    autoClose: 1000000
+                                });
+                            } else {
+                                $(document).dialog({
+                                    infoText: "网络不太稳定,请您在信号较好的地方再试!!!",
+                                    autoClose: 1000000
+                                });
+                            }
+                        }
+                    }
+                });
+
+                //------------------------------------------------------------------
+
+                tt1 = 2478 * -1;
+                $('.animation-ease').eq(0).css('transform', 'translate3d(0px, ' + tt1 + 'px, 0px)');
+                $('.animation-ease').eq(1).css('transform', 'translate3d(0px, ' + tt1 + 'px, 0px)');
+                $('.animation-ease').eq(2).css('transform', 'translate3d(0px, ' + tt1 + 'px, 0px)');
+            } else {
+                tt1 = sum(1, 2000) * -1;
+                $('.animation-ease').eq(0).css('transform', 'translate3d(0px, ' + tt1 + 'px, 0px)')
+                tt2 = sum(1, 2000) * -1;
+                $('.animation-ease').eq(1).css('transform', 'translate3d(0px, ' + tt2 + 'px, 0px)')
+                tt3 = sum(1, 2000) * -1;
+                $('.animation-ease').eq(2).css('transform', 'translate3d(0px, ' + tt3 + 'px, 0px)')
+
+                countdown--;
+                setTimeout(function() {
+                    start()
+                }, 1000);
+            }
+
+        }
+
+        function sum(m, n) {
+            var num = Math.floor(Math.random() * (m - n) + n);
+            return num;
+        }
+
+        $('.tabs_btn1').click(function() {
+            $(document).dialog({
+                type: 'confirm',
+                titleText: "确认取消吗,取消将会导致金额冻结?",
+                autoClose: 0,
+                onClickConfirmBtn: function() {
+                    $('#orderDetail .van-overlay').hide();
+                    //window.location.href="/index/user/logout.html";
+                },
+                onClickCancelBtn: function() {
+
+                }
+            });
+        });
+
+        $('.close').click(function() {
+            $(document).dialog({
+                type: 'confirm',
+                titleText: "确认取消吗,取消将会导致金额冻结?",
+                autoClose: 0,
+                onClickConfirmBtn: function() {
+                    $('#orderDetail .van-overlay').hide();
+                    //window.location.href="/index/user/logout.html";
+                },
+                onClickCancelBtn: function() {
+
+                }
+            });
+        });
+
+        var zhujiTime = "5";
+        var shopTime = "5";
+
+        zhujiTime = zhujiTime * 1000;
+        shopTime = shopTime * 1000;
+        //提交
+        $('.tabs_btn2').click(function() {
+            //--------------------------------
+            var i = 0;
+            layer.open({
+                type: 2,
+                content: '申购提交中',
+                time: zhujiTime,
+                shadeClose: false,
+            });
+
+            //--------------------------------
+            var i = 0;
+            layer.open({
+                type: 2,
+                content: '申购提交中',
+                time: zhujiTime,
+                shadeClose: false,
+            });
+            var timer = setInterval(function() {
+                i++;
+                if (i == 1) {
+                    layer.open({
+                        type: 2,
+                        content: '正在发送申购请求',
+                        // , content: '远程主机正在分配',
+                        time: zhujiTime,
+                        shadeClose: false,
+                    })
+                } else if (i == 2) {
+                    layer.open({
+                        type: 2,
+                        content: '等待基金系统响应',
+                        //, content: '等待商家系统响应',
+                        time: shopTime,
+                        shadeClose: false,
+                    })
+                    var ajaxT = setTimeout(function() {
+                        $.ajax({
+                            url: "/index/order/do_order",
+                            type: "POST",
+                            dataType: "JSON",
+                            data: {
+                                oid: oid,
+                                add_id: add_id
+                            },
+                            success: function(res) {
+                                console.log(res)
+                                if (res.code == 0) {
+                                    $(document).dialog({
+                                        infoText: "申购提交成功!,",
+                                        autoClose: 2000
+                                    });
+                                    clearInterval(timer);
+                                    var linkTime = setTimeout(function() {
+                                        location.reload()
+                                    }, 1800);
+                                } else {
+                                    $(document).dialog({
+                                        infoText: res.info,
+                                        autoClose: 200000
+                                    });
+                                }
+                                sumbit = true;
+                            },
+                            error: function(err) {
+                                console.log(err);
+                                sumbit = true;
+                            }
+                        })
+                    }, shopTime)
+                }
+            }, zhujiTime)
+
+
+        });
+    </script>
+    <script>
+        var divs = document.getElementsByClassName("nowDate");
+        for (var i = 0; i < divs.length; i++) {
+            divs[i].innerText = getNowFormatDate();
+        }
+
+        //获取当前时间，格式YYYY-MM-DD
+        function getNowFormatDate() {
+            var date = new Date();
+            var seperator1 = "/";
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            var h = date.getHours();
+            var m = date.getMinutes();
+            var s = date.getSeconds();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = year + seperator1 + month + seperator1 + strDate;
+            return currentdate;
+        }
+    </script>
+    <script type="text/javascript">
+        //Math.round() 把一个数字舍入为最接近的整数。
+        //math.random()取得某个范围内的随机数
+        var Arr = [] || new Array();
+
+        var mupiao;
+        Arr[0] = Math.round((Math.random()) * 9); //输出的值的范围值 
+
+        for (var i = 1; i < 1; i++) //输出的个数(这里是10个数)
+        {
+            mupiao = Math.round((Math.random()) * 9);
+            for (var a = 0; a < Arr.length; a++) {
+                while (Arr[a] == mupiao) {
+                    mupiao = Math.round((Math.random()) * 9);
+                }
+            }
+            Arr[a] = mupiao;
+        }
+
+        //用js对象的特性，如何去重复：
+        //第一步：把数组转成一个js对象。
+        //第二步：把数组中的值，变成js对象中的 key。
+        //第三步：把这个对象 再还原成数组。
+
+
+        //该方法把 组数 转为 对象
+        var toObject = function(arr) {
+            var obj = {} //创建一个私有(在函数中)的对象
+
+            for (var i = 0; i < arr.length; i++) {
+                obj[arr[i]] = true; //这样就把数组转为对象了(就是把循环出来的数组 放到 对象中)
+            }
+            return obj;
+        }
+
+        //该方法把 对象 转为 数组
+        var keys = function(obj) {
+            var arr = []; //创建一个私有(在函数中)的数组
+            for (var i in obj) {
+                if (obj.hasOwnProperty(i)) //判断这个属性是否属于obj的,注hasOwnProperty是js对象中的方法
+                {
+                    arr.push(i); //把循环出来的对象追加到数组中
+                }
+            }
+            return arr;
+        }
+
+        //合并方法，去除数组中的重复项
+        var uniq = function(arrs) {
+            return keys(toObject(arrs)); //把数arrs放到toObject方法中，然后在把toObject方法入到keys方法中并返回，就OK了。
+        }
+
+
+        document.getElementById('conA').innerHTML = Arr; //这是原来的随机数组
+    </script>
+</body>
+
+</html>

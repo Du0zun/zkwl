@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="static/css/login.css" rel="stylesheet" type="text/css">
+    <title>登录</title>
+</head>
+
+<body>
+    <div class="app" style="overflow: hidden;">
+        <div class="head">
+            <img class="logo" src="static/image/daV.png">
+            <img class="logo2" src="static/image/login_logo.png">
+            <!-- <div @click="jump('reg.html')" class="reg">注册</div> -->
+        </div>
+        <div class="middle">
+            <div class="middle-title">账号</div>
+            <div class="input-bg">
+                <input v-model="account" class="input" placeholder="请输入您的手机号">
+            </div>
+            <div class="middle-title">密码</div>
+            <div class="input-bg">
+                <input v-if="!choose" v-model="pwd" class="input" type="password" placeholder="请输入密码">
+                <input v-if="choose" v-model="pwd" class="input" type="text" placeholder="请输入密码">
+                <img @click="look()" v-if="!choose" class="input-ess" src="static/image/ess.png">
+                <img @click="look()" v-if="choose" class="input-ess" src="static/image/ess2.png">
+            </div>
+            <div class="box">
+                <div class="remember" @click="remember = !remember">
+                    <!-- <div class="kuang">
+                        <img v-if="remember" class="gou" src="static/image/gou.png">
+                    </div> -->
+                    <div @click="jump('reg.html')">注册</div>
+                </div>
+                <div @click="jump('forget_pwd.html')" class="forget">忘记密码?</div>
+            </div>
+            <div @click="login()" class="btn">登录</div>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="static/js/jquery-3.1.1.min.js"></script>
+<script src="static/js/vue.js"></script>
+<script src="static/js/vue.min.js"></script>
+<script charset="utf-8" src="static_new/js/dialog.min.js"></script>
+<link rel="stylesheet" href="static_new/css/public.css">
+<script src="static/js/helper.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '.app',
+        data: {
+            choose: false,
+            remember: false,
+            account: '',
+            pwd: '',
+        },
+        mounted: function() {
+
+        },
+        methods: {
+            login() {
+                if (!this.account || !this.pwd) {
+                    $(document).dialog({
+                        infoText: '账号或密码为空'
+                    });
+                    return;
+                }
+                let data = {
+                    username: this.account,
+                    password: this.pwd
+                }
+                var loading = null;
+                loading = $(document).dialog({
+                    type: 'notice',
+                    infoIcon: 'static_new/img/loading.gif',
+                    infoText: '正在加载中',
+                    autoClose: 0
+                });
+                http_api.http_send('login', data, 'POST',
+                    (res) => {
+                        loading.close();
+                        $(document).dialog({
+                            infoText: res.msg
+                        });
+                        console.log('返回的数据', res)
+                        if (res.status) {
+                            window.localStorage.setItem("user", '')
+                            window.localStorage.setItem("user", res.data.lastsession)
+                            window.localStorage.setItem("bulletin_type", '')
+                            window.localStorage.setItem("bulletin_type", 1)
+                            window.localStorage.setItem("bulletin_type3", '')
+                            window.localStorage.setItem("bulletin_type3", 1)
+                            setTimeout(() => {
+                                this.jump('home.html');
+                            }, 1500);
+
+                        }
+                    })
+            },
+            look() {
+                this.choose = !this.choose;
+            },
+            jump(e) {
+                $(location).attr('href', e);
+            }
+        },
+        created() {
+
+        }
+    })
+</script>
+
+</html>

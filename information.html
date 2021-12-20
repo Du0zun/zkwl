@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="static/css/information.css" rel="stylesheet" type="text/css">
+    <title>资讯</title>
+</head>
+
+<body>
+    <div class="app" style="overflow: hidden;">
+        <div class="head">
+            <img @click="back()" class="back" src="static/image/back.png">
+            <div>资讯</div>
+        </div>
+        <!-- <div class="label_box">
+            <div @click="label_choose = 0" class="label" :class="{label_choose:label_choose == 0}">全部</div>
+            <div @click="label_choose = 1" class="label" :class="{label_choose:label_choose == 1}">市场追踪</div>
+            <div @click="label_choose = 2" class="label" :class="{label_choose:label_choose == 2}">投资进阶</div>
+            <div @click="label_choose = 3" class="label" :class="{label_choose:label_choose == 3}">新手入门</div>
+        </div> -->
+        <div class="content">
+            <div class="item" @click="jump('detail.html?id='+ row.id)" v-for="(row,i) in data_arr">
+                <div>
+                    <div class="msg">
+                        {{row.title}}
+                    </div>
+                    <div class="info">
+                        {{row.click_count}}阅读
+                    </div>
+                </div>
+                <img class="img" src="static/picture/4fc030a847ab4305b086e8cae62eb4fa.png">
+            </div>
+
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="static/js/jquery-3.1.1.min.js"></script>
+<script src="static/js/vue.js"></script>
+<script src="static/js/vue.min.js"></script>
+<script charset="utf-8" src="static_new/js/dialog.min.js"></script>
+<link rel="stylesheet" href="static_new/css/public.css">
+<script src="static/js/helper.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '.app',
+        data: {
+            label_choose: 0,
+            page: 0,
+            last_page: 1,
+            data_arr: []
+        },
+        mounted: function() {
+            this.loadData();
+        },
+        methods: {
+            back() {
+                window.history.go(-1)
+            },
+            jump(e) {
+                $(location).attr('href', e);
+            },
+            loadData() {
+                this.page++;
+                if (this.page > this.last_page) {
+                    return
+                };
+                var loading = null;
+                loading = $(document).dialog({
+                    type: 'notice',
+                    infoIcon: 'static_new/img/loading.gif',
+                    infoText: '正在加载中',
+                    autoClose: 0
+                });
+                http_api.http_send('articles/index', {
+                        page: this.page
+                    }, 'POST',
+                    (res) => {
+                        loading.close();
+
+                        if (res.status) {
+                            this.last_page = res.data.list.last_page
+                            for (let k in res.data.list.data) {
+                                this.data_arr.push(res.data.list.data[k])
+                            }
+                        }
+                    });
+            }
+
+        },
+        created() {
+            $(window).scroll(() => {
+                if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+                    this.loadData();
+                }
+            });
+        }
+    })
+</script>
+
+</html>

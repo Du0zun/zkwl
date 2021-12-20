@@ -1,0 +1,149 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #F7F7F7;
+}
+
+.head {
+    width: 100%;
+    height: 203px;
+    background: #F23F5C;
+    overflow: hidden;
+}
+
+.head_set {
+    width: 20px;
+    height: 17px;
+    float: right;
+    margin-top: 20px;
+    margin-right: 13px;
+}
+
+.head_box {
+    display: flex;
+    margin-top: 35px;
+}
+
+.head_icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-left: 19px;
+    margin-right: 17px;
+}
+
+.phone {
+    font-size: 22px;
+    font-weight: 500;
+    color: #FFFFFF;
+    margin-bottom: 7px;
+}
+
+.yqm {
+    width: 123px;
+    height: 19px;
+    background: #3E4150;
+    border-radius: 3px;
+    color: #FFFFFF;
+    font-size: 12px;
+    text-align: center;
+    line-height: 19px;
+}
+
+.middle {
+    display: flex;
+    justify-content: center;
+    padding: 0 14px;
+    margin-top: -36px;
+}
+
+.middle_box {
+    width: 100%;
+    height: 144px;
+    background: #FFFFFF;
+    border-radius: 5px;
+}
+
+.money {
+    font-size: 26px;
+    margin-left: 18px;
+}
+
+.moeny_box {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    margin-top: 12px;
+}
+
+.btn_box {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 26px;
+    margin-top: 15px;
+    margin-bottom: 13px;
+}
+
+.btn_1 {
+    width: 150px;
+    height: 39px;
+    background: #FD992E;
+    border-radius: 5px;
+    color: #FFFFFF;
+    line-height: 39px;
+    text-align: center;
+}
+
+.btn_2 {
+    width: 150px;
+    height: 39px;
+    background: #3386EC;
+    border-radius: 5px;
+    color: #FFFFFF;
+    line-height: 39px;
+    text-align: center;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0 20px;
+    margin-bottom: 70px;
+}
+
+.item {
+    width: 31%;
+    height: 77px;
+    background: #FFFFFF;
+    border-radius: 9px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+}
+
+.item_img {
+    width: 31px;
+    height: 31px;
+    margin-bottom: 8px;
+}
+
+.flex-center{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.sign{
+    margin-top: 20px;
+    margin-right: 13px;
+    color: #ffffff;
+}

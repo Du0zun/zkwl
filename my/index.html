@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>个人中心</title>
+		<link rel="stylesheet" type="text/css" href="/new2/css/profile.css"/>
+		<link rel="stylesheet" type="text/css" href="/new2/css/tabbar.css"/>
+		  <link rel="stylesheet" href="/static_new/css/public.css">
+		 <script charset="utf-8" src="/static_new/js/jquery.min.js"></script>
+    <script charset="utf-8" src="/static_new/js/dialog.min.js"></script>
+
+    <script charset="utf-8" src="/static_new/js/common.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<header class="header">
+				<div class="top">
+					 <img data-v-d5f15326="" src="{$info.headpic}" onerror="this.src='/public/img/head.png'" alt="" class="headerImg">
+					<span>用户名：</span>
+					<span>{$info.username}</span>
+					<a href="/index/ctrl/set"><span class="opts" style="color:#fff;">设置</span></a>
+				</div>
+				<div class="info">
+					<p><span>总资产（元）</span><span class="price">{$info.balance}</span></p>
+					
+					
+					<div class="info-list">
+						<div class="">
+							<p>昨日收益</p>
+							<p>{$yes_user_yongjin|round=###,2}</p>
+						</div>
+						<div class="">
+							<p>累计收益</p>
+							<p>{$user_yongjin|round=###,2}</p>
+						</div>
+						<div class="">
+							<p>今日收益</p>
+							<p>{$tod_user_yongjin|round=###,2}</p>
+						</div>
+						
+					</div>
+						<div class="account-bto">
+					<div class="active">
+					    <a href="/index/ctrl/recharge">
+						<h4 style="color:#F05065">在线充值</h4>
+						 </a>
+					</div>
+					<span>&nbsp;</span>
+					<div class="">
+					 <a href="/index/ctrl/deposit">
+					     <h4 style="color:#F05065">快速提现</h4>
+						</a>
+					</div>
+				</div>
+				</div>
+			</header>
+			<div class="account">
+				<h4>理财宝账户</h4>
+				<div class="account-list">
+					<div class="">
+						<p>资产</p>
+						<p>{$balance}</p>
+					</div>
+					<div class="">
+						<p>最新收益</p>
+						<p>{$yes_shouyi}</p>
+					</div>
+					<!--<div class="">
+						<p>持有收益</p>
+						<p>{$balance_total}</p>
+					</div>-->
+				</div>
+				<div class="account-btn">
+					<div class="active">
+					    <a href="/index/ctrl/lixibao" style="color:#fff;">
+						存入
+						 </a>
+					</div>
+					<div class="">
+					 <a href="/index/ctrl/lixibao_chu">
+						取现
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="list">
+				<a href="/index/ctrl/set">
+					<img src="/7.png" >
+					<p>个人信息</p>
+				</a>
+				<a href="/index/order/index">
+					<img src="/3.png" >
+					<p>持仓记录</p>
+				</a>
+				<a href="/index/my/caiwu">
+					<img src="/4.png" >
+					<p>账户明细</p>
+				</a>
+				<a href="/index/ctrl/recharge_admin">
+					<img src="/2.png" >
+					<p>充值记录</p>
+				</a>
+				<a href="/index/agent/yongjin">
+					<img src="/12.png" >
+					<p>我的佣金</p>
+				</a>
+				<a href="/index/ctrl/deposit_admin">
+					<img src="/5.png" >
+					<p>提现记录</p>
+				</a>
+				<a href="/index/my/share.html">
+					<img src="/1.png" >
+					<p>邀请好友</p>
+				</a>
+				<a href="/index/my/msg">
+					<img src="/10.png" >
+					<p>信息公告</p>
+				</a>
+				<a href="/index/ctrl/junior">
+					<img src="/8.png" >
+					<p>团队业绩</p>
+				</a>
+			</div>
+			<div data-v-d5f15326="" class="LoginOut">
+            <button data-v-d5f15326="" class="tabs_btn1" style="    width: 90%;
+    height: 40px;
+    line-height: 40px;
+    margin: 30px 18px;
+    text-align: center;
+    font-size: 16px;
+    background-color: #F03455;
+    color: #FFFFFF;
+    border-radius: 10px;outline:none;-webkit-appearance: none;border:0">退出登陆</button>
+        </div>
+		</div>
+		<div class="tabbar">
+			<a class="" href="/index/index/home">
+				<img src="/db/sy1.png" >
+				<p>首页</p>
+			</a>
+			<a class="" href="/index/order/index.html?status=5">
+				<img src="/db/ls1.png" >
+				<p>记录</p>
+			</a>
+			<a class="" href="/index/rot_order/index.html">
+				<img src="/db/pd1.png" >
+				<p>申购</p>
+			</a>
+			<a class="" href="/index/support/index">
+				<img src="/db/kf1.png" >
+				<p>客服</p>
+			</a>
+			<a class="" href="/index/my/index.html">
+				<img src="/db/wd1.png" >
+				<p>我的资产</p>
+			</a>
+		</div>
+		<script>
+    $(function() {
+        $('.footer li').eq(4).addClass("on");
+
+    })
+
+    $('.tabs_btn1').click(function () {
+        $(document).dialog({
+            type: 'confirm',
+            titleText: "确认退出吗?",
+            autoClose: 0,
+            onClickConfirmBtn: function () {
+                window.location.href="{:url('user/logout')}";
+            },
+            onClickCancelBtn: function () {
+
+            }
+        });
+    });
+</script>
+	</body>
+</html>

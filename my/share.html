@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>分享有惊喜</title>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		a{
+			text-decoration: none;
+		}
+		#app {
+			height: 100vh;
+			font-size: 12px;
+		}
+		.title {
+			background-color: #f03455;
+			height: 40px;
+			display: flex;
+			align-items: center;
+			color: #FFFFFF;
+			justify-content: center;
+			position: relative;
+			font-size: 16px;
+		}
+		
+		.icon {
+			display: inline-block;
+			background-image: url(/new/img/left.png);
+			width: 20px;
+			height: 20px;
+			background-size: 100% 100%;
+			background-position: center;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			left: 10px;
+		}
+		
+		.text-right {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			right: 10px;
+			font-size: 14px;
+		}
+		.main{
+			height: calc(100vh - 40px);
+			overflow: auto;
+		}
+		.main-top{
+			background-image: url(/new/img/bg1.png);
+			height: 101%;
+			background-size: 100% 100%;
+			position: relative;
+			overflow: hidden;
+		}
+		.msg{
+			width: 80%;
+			height: 5%;
+			position: absolute;
+			top: 46.5%;
+			left: 15%;
+			
+			color: #FFFFFF;
+			padding-left: 20px;
+			overflow: hidden;
+		}
+		.swiper-wrapper{
+			width: 100%;
+			height: 100%;
+		}
+		.swiper-slide{
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+		}
+		.bounty{
+			position: absolute;
+			top: 67%;
+			left: 10%;
+		}
+		.count{
+			position: absolute;
+			top: 67%;
+			right: 35%;
+		}
+		.text{
+			font-size: 20px;
+			margin-right: 5px;
+			font-weight: bold;
+		}
+		.award{
+			width: 32%;
+			height: 6%;
+			position: absolute;
+			top: 73.2%;
+			left: 11%;
+			border-radius: 50px;
+		}
+		.friend{
+			width: 32%;
+			height: 6%;
+			position: absolute;
+			top: 73.2%;
+			right: 11%;
+			border-radius: 50px;
+		}
+		
+		.award>a,.friend>a{
+			display: block;
+			height: 100%;
+			width: 100%;
+			-webkit-tap-highlight-color: transparent;
+		}
+		.invite{
+			position: absolute;
+			top: 82%;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			margin: auto;
+			width: 60%;
+			height: 50px;
+			background-color: #fffefc;
+			font-size: 23px;
+			font-weight: bold;
+			text-align: center;
+			line-height: 50px;
+			border-radius: 50px;
+			transition: all .5s;
+			animation:text 2s ease-in-out infinite;
+		}
+		.invite>a{
+			color: #fc1711;
+			display: block;
+			width: 100%;
+			height: 100%;
+			-webkit-tap-highlight-color: transparent;
+		}
+		.main-bottom{
+			background-color: #ff3c2e;
+			padding: 20px;
+			box-sizing: border-box;
+		}
+		.b{
+			display: flex;
+			font-size: 16px;
+			color: #FFFEFC;
+			margin-bottom: 20px;
+		}
+		.b-l{
+			width: 100px;
+			height: 50px;
+			background-color: #ffffff;
+			border-radius: 5px;
+			text-align: center;
+			line-height: 50px;
+			color: #FC1711;
+		}
+		.b-r{
+			width: calc(100vh - 100px);
+			text-align: justify;
+			padding-left: 5px;
+		}
+		.ft-color-y{
+			color: #F1A409;
+		}
+		.notice{
+			text-align: center;
+			color: #FFFFFF;
+		}
+		@keyframes text
+		{
+			from {transform: scale(1.2);}
+			to {transform: scale(1);}
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<div class="title">
+			<span class="icon"></span>
+			<span class="">分享赚取佣金</span>
+		</div>
+		<div class="main">
+			<div class="main-top">
+				<div class="msg swiper-container">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<span class="tel">133****2180</span>
+							通过分享，获得佣金
+							<span class="price">6.28</span>元
+						</div>
+						<div class="swiper-slide">
+							<span class="tel">133****9909</span>
+							通过分享，获得佣金
+							<span class="price">10.28</span>元
+						</div>
+					</div>
+				</div>
+				<div class="bounty">
+					<span class="text">{$teamyj}</span>元
+				</div>
+				<div class="count">
+					<span class="text">{$tuandui}</span>人
+				</div>
+				<div class="award">
+					<a href="/index/agent/yongjin"></a>
+				</div>
+				<div class="friend">
+					<a href="/index/ctrl/junior"></a>
+				</div>
+				<div class="invite">
+					<a href="/index/my/invite.html">邀请好友</a>
+				</div>
+			</div>
+		<!--	<div class="main-bottom">
+				<div class="b">
+					<div class="b-l">
+						分享
+					</div>
+					<div class="b-r">
+						分享后<span class="ft-color-y">必须点击“返回华夏基金管家”</span>才能实时领取红包
+					</div>
+				</div>
+				<div class="b">
+					<div class="b-l">
+						惊喜
+					</div>
+					<div class="b-r">
+						注册用户可选择领取积分。已开户用户可以领取红包，首次分享可得大红包，有效分享越多，惊喜越多。单人单日有效分享最多为20次，单人最多可累计邀请20个好友。
+					</div>
+				</div>
+				<div class="b">
+					<div class="b-l">
+						奖励
+					</div>
+					<div class="b-r">
+						红包奖励为活期通（华夏现金增利货币A）份额，可取现。积分奖励可抵扣认申购费用或兑换礼品。
+					</div>
+				</div>-->
+				<div class="notice">
+					市场有风险 投资需谨慎
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="/new/js/swiper-bundle.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	new Swiper('.msg', {
+		autoplay: true, 
+		loop:true,
+		direction : 'vertical',
+	})
+	
+	
+	
+	function getData(){
+		var telF = ['138','130','131','189','186','187','188','151','156','157','159','135'];
+		var html='';
+		for(var i=0;i<10;i++){
+			var idx = Math.floor(Math.random()*12);
+			var num = Math.floor(Math.random()*10000);
+			var price = (Math.floor(Math.random()*(10000-1000)+100000)/100).toFixed(2);
+			html += `
+			<div class="swiper-slide">
+				<span class="tel">${telF[idx]}****${num}</span>
+				通过成功分享，近七日获得
+				<span class="price">${price}</span>元
+			</div>
+			`;
+		}
+		document.querySelector('.swiper-wrapper').innerHTML=html
+	}
+	getData();
+	
+</script>
+
+</html>

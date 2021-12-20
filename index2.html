@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>个人中心</title>
+    <link rel="stylesheet" type="text/css" href="static/css/profile.css">
+    <link rel="stylesheet" type="text/css" href="static/css/tabbar.css">
+    <link rel="stylesheet" href="static/css/public.css">
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/dialog.min.js"></script>
+    <script src="static/js/common.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <header class="header">
+            <div class="top"><img data-v-d5f15326="" src="" onerror="this.src='/public/img/head.png'" alt="" class="headerImg"><span>用户名：</span><span>cc</span><a href="set.html"><span class="opts" style="color:#fff;">设置</span></a></div>
+            <div class="info">
+                <p><span>总资产（元）</span><span class="price">1234.69</span></p>
+                <div class="info-list">
+                    <div class="">
+                        <p>昨日收益</p>
+                        <p>0</p>
+                    </div>
+                    <div class="">
+                        <p>累计收益</p>
+                        <p>0</p>
+                    </div>
+                    <div class="">
+                        <p>今日收益</p>
+                        <p>0</p>
+                    </div>
+                </div>
+                <div class="account-bto">
+                    <div class="active">
+                        <a href="recharge.html">
+                            <h4 style="color:#F05065">在线充值</h4>
+                        </a>
+                    </div><span>&nbsp;</span>
+                    <div class="">
+                        <a href="deposit.html">
+                            <h4 style="color:#F05065">快速提现</h4>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="account">
+            <h4>理财宝账户</h4>
+            <div class="account-list">
+                <div class="">
+                    <p>资产</p>
+                    <p>2100.0000</p>
+                </div>
+                <div class="">
+                    <p>最新收益</p>
+                    <p>0</p>
+                </div>
+                <!--<div class=""><p>持有收益</p><p>2100</p></div>--></div>
+            <div class="account-btn">
+                <div class="active"><a href="lixibao.html" style="color:#fff;">
+						存入
+						 </a></div>
+                <div class=""><a href="lixibao_chu.html">
+						取现
+						</a></div>
+            </div>
+        </div>
+        <div class="list">
+            <a href="set.html"><img src="static/picture/7.png">
+                <p>个人信息</p>
+            </a>
+            <a href="index5.html"><img src="static/picture/3.png">
+                <p>持仓记录</p>
+            </a>
+            <a href="caiwu.html"><img src="static/picture/4.png">
+                <p>账户明细</p>
+            </a>
+            <a href="recharge_admin.html"><img src="static/picture/2.png">
+                <p>充值记录</p>
+            </a>
+            <a href="yongjin.html"><img src="static/picture/12.png">
+                <p>我的佣金</p>
+            </a>
+            <a href="deposit_admin.html"><img src="static/picture/5.png">
+                <p>提现记录</p>
+            </a>
+            <a href="share.html"><img src="static/picture/1.png">
+                <p>邀请好友</p>
+            </a>
+            <a href="msg.html"><img src="static/picture/10.png">
+                <p>信息公告</p>
+            </a>
+            <a href="junior.html"><img src="static/picture/8.png">
+                <p>团队业绩</p>
+            </a>
+        </div>
+        <div data-v-d5f15326="" class="LoginOut"><button data-v-d5f15326="" class="tabs_btn1" style="    width: 90%;
+    height: 40px;
+    line-height: 40px;
+    margin: 30px 18px;
+    text-align: center;
+    font-size: 16px;
+    background-color: #F03455;
+    color: #FFFFFF;
+    border-radius: 10px;outline:none;-webkit-appearance: none;border:0">退出登陆</button></div>
+    </div>
+    <div class="tabbar">
+        <a class="" href="home.html"><img src="static/picture/sy1.png">
+            <p>首页</p>
+        </a>
+        <a class="" href="index1.html"><img src="static/picture/ls1.png">
+            <p>记录</p>
+        </a>
+        <a class="" href="index.html"><img src="static/picture/pd1.png">
+            <p>申购</p>
+        </a>
+        <a class="" href="index3.html"><img src="static/picture/kf1.png">
+            <p>客服</p>
+        </a>
+        <a class="" href=""><img src="static/picture/wd1.png">
+            <p>我的资产</p>
+        </a>
+    </div>
+    <script>
+        $(function() {
+            $('.footer li').eq(4).addClass("on");
+
+        })
+
+        $('.tabs_btn1').click(function() {
+            $(document).dialog({
+                type: 'confirm',
+                titleText: "确认退出吗?",
+                autoClose: 0,
+                onClickConfirmBtn: function() {
+                    window.location.href = "/index/user/logout.html";
+                },
+                onClickCancelBtn: function() {
+
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="../static/css/my_equity.css" rel="stylesheet" type="text/css">
+    <title>我的股权</title>
+</head>
+
+<body>
+    <div class="app" style="overflow: hidden;">
+        <div class="head">
+            <div class="head_title">
+                我的股权
+                <img @click="back()" class="back" src="../static/image/back2.png">
+            </div>
+            <div class="head_title2">累计收益(元)</div>
+            <div class="head_money">{{totalRevenue}}</div>
+            <div class="head_content">
+                <div class="head_item">
+                    <div>{{totalAmount}}</div>
+                    <div>购买总金额</div>
+                </div>
+                <div class="head_item">
+                    <div>{{yesterdayRevenue}}</div>
+                    <div>昨日收益</div>
+                </div>
+                <div class="head_item">
+                    <div>{{totalRevenue}}</div>
+                    <div>总收益</div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="item" v-for="(row,i) in data_arr">
+                <img class="goods" :src="uploadUrl+row.pic">
+                <div style="width: 100%;margin-top: 17px;">
+                    <div class="item_title">
+                        <div style="font-size: 15px;">{{row.title}}</div>
+                        <div @click="setMsg(row)">
+                            <span style="color: #999999;font-size: 13px;">查看详情</span>
+                            <img class="you" src="../static/image/you.png">
+                        </div>
+                    </div>
+                    <div class="item_box">
+                        <div>
+                            <div style="color: #FB861F;font-size: 16px;margin-bottom: 5px;">￥{{row.amount}}</div>
+                            <div style="color: #999999;font-size: 13px;">购买金额</div>
+                        </div>
+                        <div>
+                            <div style="color: #F72130;font-size: 16px;margin-bottom: 5px;">￥{{row.moneyCount}}</div>
+                            <div style="color: #999999;font-size: 13px;">昨日收益</div>
+                        </div>
+                        <div>
+                            <div style="color: #F72130;font-size: 16px;margin-bottom: 5px;">￥{{row.shouyis}}</div>
+                            <div style="color: #999999;font-size: 13px;">总收益</div>
+                        </div>
+                    </div>
+                    <div class="book" @click="jump('equity_book.html?id=' + row.id)">股权证书</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script type="text/javascript" src="../static/js/jquery-3.1.1.min.js"></script>
+<script src="../static/js/vue.js"></script>
+<script src="../static/js/vue.min.js"></script>
+<script charset="utf-8" src="../static_new/js/dialog.min.js"></script>
+<link rel="stylesheet" href="../static_new/css/public.css">
+<script src="../static/js/helper.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '.app',
+        data: {
+            page: 0,
+            last_page: 1,
+            data_arr: [],
+            totalAmount: "",
+            totalRevenue: "",
+            yesterdayRevenue: "",
+            uploadUrl: ''
+        },
+        mounted: function() {
+            this.uploadUrl = uploadUrl;
+            this.loadData();
+        },
+        methods: {
+            loadData() {
+                this.page++;
+                if (this.page > this.last_page) {
+                    return
+                };
+                var loading = null;
+                loading = $(document).dialog({
+                    type: 'notice',
+                    infoIcon: '../static_new/img/loading.gif',
+                    infoText: '正在加载中',
+                    autoClose: 0
+                });
+                http_api.http_send('user/money/tender/12', {
+                        page: this.page
+                    }, 'POST',
+                    (res) => {
+                        loading.close();
+                        if (res.status) {
+                            this.totalAmount = res.totalAmount;
+                            this.totalRevenue = res.totalRevenue;
+                            this.yesterdayRevenue = res.yesterdayRevenue;
+                            this.last_page = res.data.last_page
+                            for (let k in res.data.data) {
+                                this.data_arr.push(res.data.data[k])
+                            }
+
+                        }
+                    });
+            },
+            setMsg(row) {
+                window.localStorage.setItem("goods_info", '')
+                window.localStorage.setItem("goods_info", JSON.stringify(row))
+                this.jump('my_info.html');
+            },
+            back() {
+                window.history.go(-1)
+            },
+            jump(e) {
+                $(location).attr('href', e);
+            }
+        },
+        created() {
+            $(window).scroll(() => {
+                if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+                    this.loadData();
+                }
+            });
+        }
+    })
+</script>
+
+</html>

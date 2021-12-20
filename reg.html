@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="static/css/reg.css" rel="stylesheet" type="text/css">
+    <title>注册</title>
+</head>
+
+<body>
+    <div class="app" style="overflow: hidden;">
+        <div class="head">
+            <img @click="back()" class="back" src="static/image/back.png">
+            <div>注册</div>
+        </div>
+        <div class="content">
+            <div style="font-size: 14px;margin-top: 22px;">姓名</div>
+            <div class="item">
+                <input v-model="name" class="input" placeholder="请输入真实姓名">
+            </div>
+            <div style="font-size: 14px;margin-top: 22px;">手机号</div>
+            <div class="item">
+                <input v-model="phone" class="input" placeholder="请输入您的手机号">
+            </div>
+            <div style="font-size: 14px;margin-top: 22px;">图文验证</div>
+            <div class="item">
+                <input v-model="code2" class="input" placeholder="请输入验证码">
+                <img style="width: 100px; height: 30px;" @click="img_upadata" :src="code_url">
+            </div>
+            <div style="font-size: 14px;margin-top: 22px;">短信验证</div>
+            <div class="item">
+                <input v-model="code" class="input" placeholder="请输入短信验证码">
+                <div v-if="!time_switch" class="btn-send" @click="sendCode()">发送验证码</div>
+                <div v-if="time_switch" class="btn-send">{{time}}s</div>
+            </div>
+            <div style="font-size: 14px;margin-top: 22px;">密码</div>
+            <div class="item">
+                <input v-if="!choose" v-model="pwd" class="input" type="password" placeholder="6-20位字母和数字">
+                <input v-if="choose" v-model="pwd" class="input" type="text" placeholder="6-20位字母和数字">
+                <img @click="look()" v-if="!choose" class="input-ess" src="static/image/ess.png">
+                <img @click="look()" v-if="choose" class="input-ess" src="static/image/ess2.png">
+            </div>
+            <div style="font-size: 14px;margin-top: 22px;">交易密码</div>
+            <div class="item">
+                <input v-model="pay_pwd" class="input" placeholder="请输入交易密码">
+            </div>
+            <div style="font-size: 14px;margin-top: 22px;">邀请码</div>
+            <div class="item">
+                <input v-model="invita" class="input" placeholder="请输入邀请码">
+            </div>
+            <!-- <div class="box">
+                <div class="yuan" @click="choose2 = !choose2">
+                    <img v-if="choose2" class="tick" src="static/image/tick.png">
+                </div>
+                <div>
+                    我已知晓并同意“
+                </div>
+                <div style="color:#EC0022">开户协议</div>
+                <div>”各项条约</div>
+            </div> -->
+        </div>
+        <div class="bottom">
+            <div @click="reg()" class="reg">注册</div>
+        </div>
+        <div class="bulletin3" :class="{bulletin4:bulletin_type == 1}">
+            <div class="mask3">
+                <div class="bulletin_box3">
+                    <!-- <img class="bulletin_exit3" src="static/image/tuanchuan2.png" @click="bulletin_exit()"> -->
+                    <div style="display: flex;justify-content: center;">
+                        <img class="gonggao3" src="static/image/appload.png">
+                    </div>
+
+                    <div class="bull_sitle3">APP下载</div>
+                    <div class="bulletin_content3">
+                        APP下载
+                    </div>
+                    <div class="bulletin_content3">
+                        实现更好的用户体验
+                    </div>
+                    <div style="display: flex;justify-content: center;">
+                        <div class="bulletin_xian3"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div @click="back()" class="bulletin_btn3" style="border-right: 1px solid #EBEBEB;">取消</div>
+                        <div @click="jump_load()" class="bulletin_btn3">确认</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="static/js/jquery-3.1.1.min.js"></script>
+<script src="static/js/vue.js"></script>
+<script src="static/js/vue.min.js"></script>
+<script charset="utf-8" src="static_new/js/dialog.min.js"></script>
+<link rel="stylesheet" href="static_new/css/public.css">
+<script src="static/js/helper.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '.app',
+        data: {
+            name: '',
+            phone: '',
+            code: '',
+            pwd: '',
+            pay_pwd: '',
+            invita: '',
+            time: 60,
+            Interval: '',
+            time_switch: false,
+            choose: false,
+            choose2: false,
+            code2: '',
+            code_url: '',
+            code_key: '',
+            AppDownloadUrl: '',
+            type: '',
+            bulletin_type: ''
+        },
+        mounted: function() {
+            this.invita = http_api.GetQueryString('invicode');
+            this.type = http_api.GetQueryString('type');
+            this.img_upadata();
+            var loading = null;
+            loading = $(document).dialog({
+                type: 'notice',
+                infoIcon: 'static_new/img/loading.gif',
+                infoText: '正在加载中',
+                autoClose: 0
+            });
+            http_api.http_send('update_download', {}, 'POST',
+                (res) => {
+                    loading.close();
+                    this.AppDownloadUrl = res.data.AppDownloadUrl;
+                })
+        },
+        methods: {
+            img_upadata() {
+                var loading = null;
+                loading = $(document).dialog({
+                    type: 'notice',
+                    infoIcon: 'static_new/img/loading.gif',
+                    infoText: '正在加载中',
+                    autoClose: 0
+                });
+                http_api.http_send('captcha', {}, 'POST',
+                    (res) => {
+                        loading.close();
+                        this.code_url = res.data.img;
+                        this.code_key = res.data.key;
+                    })
+            },
+            reg() {
+                if (!this.name) {
+                    $(document).dialog({
+                        infoText: '请输入姓名'
+                    });
+                    return;
+                }
+                if (!this.phone) {
+                    $(document).dialog({
+                        infoText: '请输入手机号'
+                    });
+                    return;
+                }
+                if (!this.code) {
+                    $(document).dialog({
+                        infoText: '请输入验证码'
+                    });
+                    return;
+                }
+                if (!this.pwd) {
+                    $(document).dialog({
+                        infoText: '请输入密码'
+                    });
+                    return;
+                }
+                if (!this.pay_pwd) {
+                    $(document).dialog({
+                        infoText: '请输入支付密码'
+                    });
+                    return;
+                }
+                if (!this.invita) {
+                    $(document).dialog({
+                        infoText: '请输入邀请码'
+                    });
+                    return;
+                }
+                // if (!this.choose2) {
+                //     $(document).dialog({
+                //         infoText: '请勾选协议'
+                //     });
+                //     return;
+                // }
+                let data = {
+                    nickname: this.name,
+                    phone: this.phone,
+                    code: this.code,
+                    password: this.pwd,
+                    paypwd: this.pay_pwd,
+                    invicode: this.invita,
+                }
+                var loading = null;
+                loading = $(document).dialog({
+                    type: 'notice',
+                    infoIcon: 'static_new/img/loading.gif',
+                    infoText: '正在加载中',
+                    autoClose: 0
+                });
+                http_api.http_send('register', data, 'POST',
+                    (res) => {
+                        loading.close();
+                        $(document).dialog({
+                            infoText: res.msg
+                        });
+                        console.log('返回的数据', res)
+                        if (this.type == 1) {
+                            this.bulletin_type = 1;
+                        }
+                    })
+
+            },
+            jump_load() {
+                window.open(this.AppDownloadUrl)
+            },
+            back() {
+                window.history.go(-1)
+            },
+            look() {
+                this.choose = !this.choose;
+            },
+            sendCode() {
+                if (!this.phone) {
+                    $(document).dialog({
+                        infoText: '请输入手机号'
+                    });
+                    return;
+                }
+                var loading = null;
+                loading = $(document).dialog({
+                    type: 'notice',
+                    infoIcon: 'static_new/img/loading.gif',
+                    infoText: '正在加载中',
+                    autoClose: 0
+                });
+                http_api.http_send('user/new_sendSms', {
+                        mobile: this.phone,
+                        captcha: this.code2,
+                        key: this.code_key
+                    }, 'POST',
+                    (res) => {
+                        loading.close();
+                        $(document).dialog({
+                            infoText: res.msg
+                        });
+                    })
+                this.time_switch = true;
+                this.Interval = setInterval(() => {
+                    if (this.time == 0) {
+                        this.time_switch = false;
+                        clearInterval(this.Interval);
+                        this.time = 60;
+                        return;
+                    }
+                    this.time--
+                }, 1000)
+
+
+            }
+        },
+        created() {
+
+        }
+    })
+</script>
+
+</html>

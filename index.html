@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="static/css/index-guquan.css" rel="stylesheet" type="text/css">
+    <title>股权</title>
+</head>
+
+<body>
+    <div class="app" style="overflow: hidden;">
+        <div style="display: none;" :style="{display: load_type == 1?'inline':'none'}">
+            <div class="head">
+                <div class="head_title">
+                    <img @click="back()" class="back" src="static/image/back2.png">
+                    <div style="font-size: 18px;">{{msg.title}}</div>
+                </div>
+                <div class="head_box">
+                    <div v-if="type == 0" class="head_equity">
+                        <div style="font-size: 15px;display: flex;align-items: center;">￥
+                            <div style="font-size: 37px;">{{msg.qtje}}</div>
+                        </div>
+                        <div>每股价格</div>
+                    </div>
+                    <div v-if="type == 1" class="head_equity">
+                        <div style="font-size: 15px;display: flex;align-items: center;">￥
+                            <div style="font-size: 37px;">{{msg.qtje}}</div>
+                        </div>
+                        <div>起购价格</div>
+                    </div>
+                    <div class="head_equity">
+                        <div style="font-size: 15px;display: flex;align-items: center;">
+                            <div style="font-size: 37px;">{{msg.jyrsy}}</div>
+                            %
+                        </div>
+                        <div>分红比例</div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="item" style="margin-bottom: 12px;">
+                    <div class="item_title">订单信息</div>
+                    <div class="item_box">
+                        <div class="item_msg">
+                            <div>起购数量</div>
+                            <div style="margin-right: 13px;">{{msg.qtsl}}</div>
+                        </div>
+                        <div class="item_msg">
+                            <div>购买数量</div>
+                            <div class="buy_box">
+                                <div class="buy_box_btn" @click="buy_btn1()">-</div>
+                                <div class="buy_num">{{buy_num}}</div>
+                                <div class="buy_box_btn" @click="buy_btn2()">+</div>
+                            </div>
+                        </div>
+                        <div class="item_msg" style="border: 0;">
+                            <div style="display: flex;">
+                                <div>实付金额</div>
+                                <div style="color: #9B9B9B;font-size: 13px;">（以实付到账金额多准）</div>
+                            </div>
+                            <div style="margin-right: 13px;color: #F33034;">￥{{msg.qtje * buy_num}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item" v-if="msg.zsje_type == 3">
+                    <div class="item_title">产品馈赠
+                        <!-- <span style="color: #F71E1E;font-size: 16px;">Lv.3</span> -->
+                    </div>
+                    <div class="item_box">
+                        <div class="item_msg" style="border: 0;">
+                            <div style="display: flex;">
+                                <div>馈赠数量</div>
+                            </div>
+                            <div style="margin-right: 13px;">{{buy_num * msg.zsje}} 个</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="prompt">
+                    <img class="prompt_img" src="static/image/prompt.png">
+                    <div style="color: #9B9B9B;font-size: 12px;">馈赠数量按实际购买数量的{{msg.zsje}}倍为准</div>
+                </div>
+                <div class="item" style="margin-bottom: 12px;">
+                    <div class="item_title">支付信息</div>
+                    <div class="item_box">
+                        <div class="item_msg" style="border: 0;">
+                            <div style="display: flex;">
+                                <div>支付方式</div>
+                            </div>
+                            <div style="margin-right: 13px;display: flex;align-items: center;">
+                                <div>银行卡支付</div>
+                                <div class="yuan" @click="choose2 = 0">
+                                    <img v-if="choose2 == 0" class="tick" src="static/image/tick.png">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item_msg" style="border: 0;">
+                            <div style="display: flex;">
+                                <div>支付方式</div>
+                            </div>
+                            <div style="margin-right: 13px;display: flex;align-items: center;">
+                                <div>余额支付</div>
+                                <div class="yuan" @click="choose2 = 1">
+                                    <img v-if="choose2 == 1" class="tick" src="static/image/tick.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item" style="margin-bottom: 12px;" v-if="choose2 == 1">
+                    <div class="item_title">支付密码</div>
+                    <div class="item_box">
+                        <div class="item_msg" style="border: 0;">
+                            <div style="display: flex;">
+                                <div>支付密码</div>
+                            </div>
+                            <div style="margin-right: 13px;display: flex;align-items: center;">
+                                <input v-model="pay_pwd" class="input" placeholder="请输入支付密码" type="password">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item" v-if="choose2 == 0">
+                    <div class="item_box">
+                        <div class="item_msg">
+                            <div style="display: flex;">
+                                <div>收款户名</div>
+                            </div>
+                            <div style="margin-right: 13px;">{{back_data.bankrealname}}</div>
+                        </div>
+                    </div>
+                    <div class="item_box">
+                        <div class="item_msg">
+                            <div style="display: flex;">
+                                <div>收款账号</div>
+                            </div>
+                            <div style="margin-right: 13px;">{{back_data.bankcode}}</div>
+                        </div>
+                    </div>
+                    <div class="item_box">
+                        <div class="item_msg" style="margin-bottom: 10px;">
+                            <div style="display: flex;">
+                                <div>收款银行</div>
+                            </div>
+                            <div style="margin-right: 13px;">{{back_data.bankname}}</div>
+                        </div>
+                    </div>
+                    <div class="item_box" style="font-size:14px">上传凭证</div>
+                    <div class="item_box">
+                        <img @click="upload()" class="upload" :src="upload_src">
+                        <input id="upload" name="file" accept="image/*" type="file" style="display: none;" />
+                    </div>
+                </div>
+            </div>
+            <div class="combined">
+                <div class="combined_box1">
+                    <div>合计：</div>
+                    <div style="color: #F33034;font-size: 19px;">{{msg.qtje * buy_num}}</div>
+                </div>
+                <div class="combined_box2">
+                    <div @click="buy()" style="color: #FFFFFF;">提交订单</div>
+                </div>
+            </div>
+            <!-- <div class="pay_box" v-if="pay_type">
+                <div>请输入交易密码</div>
+                <input type="password" v-model="pay_pwd" placeholder="请输入交易密码">
+            </div> -->
+        </div>
+
+    </div>
+
+</body>
+<script type="text/javascript" src="static/js/jquery-3.1.1.min.js"></script>
+<script src="static/js/vue.js"></script>
+<script src="static/js/vue.min.js"></script>
+<script charset="utf-8" src="static_new/js/dialog.min.js"></script>
+<link rel="stylesheet" href="static_new/css/public.css">
+<script src="static/js/helper.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '.app',
+        data: {
+            choose2: 0,
+            buy_num: 0,
+            upload_src: 'static/image/upload.png',
+            upload_src2: '',
+            type: '',
+            msg: '',
+            qgsl: 0,
+            back_data: '',
+            pay_pwd: '',
+            pay_type: false,
+            load_type: 0,
+            uploadUrl: ''
+        },
+        mounted: function() {
+            this.uploadUrl = uploadUrl;
+            this.type = http_api.GetQueryString('type');
+            this.msg = JSON.parse(window.localStorage.getItem("goods_msg"));
+            console.log('商品数据', this.msg)
+            this.qgsl = this.msg.qtsl;
+            this.buy_num = this.msg.qtsl;
+            var loading = null;
+            loading = $(document).dialog({
+                type: 'notice',
+                infoIcon: 'static_new/img/loading.gif',
+                infoText: '正在加载中',
+                autoClose: 0
+            });
+            http_api.http_send('user/sysAccount', {}, 'POST',
+                (res) => {
+                    this.load_type = 1;
+                    loading.close();
+                    if (res.status == -1) {
+                        this.jump('login.html')
+                        return;
+                    }
+                    if (res.status) {
+                        this.back_data = res.data;
+                    }
+                })
+        },
+        methods: {
+            buy() {
+                // if (!this.pay_type) {
+                //     this.pay_type = true;
+                //     return;
+                // }
+                if (!this.upload_src2 && this.choose2 == 0) {
+                    $(document).dialog({
+                        infoText: '未上传凭证'
+                    });
+                    return;
+                }
+                if (!this.pay_pwd && this.choose2 == 1) {
+                    $(document).dialog({
+                        infoText: '请输入支付密码'
+                    });
+                    return;
+                }
+
+                var loading = null;
+                loading = $(document).dialog({
+                    type: 'notice',
+                    infoIcon: 'static_new/img/loading.gif',
+                    infoText: '正在加载中',
+                    autoClose: 0
+                });
+                let data = {
+                    number: this.buy_num,
+                    paypwd: this.pay_pwd,
+                    pay_type: this.choose2 == 0 ? 2 : 1,
+                    payimg: this.upload_src2
+                }
+                http_api.http_send('project/buy/' + this.msg.id, data, 'POST',
+                    (res) => {
+                        loading.close();
+                        $(document).dialog({
+                            infoText: res.msg
+                        });
+                        console.log('数据', res)
+                        if (res.status) {
+                            setTimeout(() => {
+                                this.back();
+                            }, 1500);
+                        }
+                    })
+            },
+            upload() {
+                let self = this;
+                console.log('上传图片')
+                $("#upload").click();
+                $("#upload").on("change", function() {
+                    // let objUrl = self.getObjectURL(this.files[0])
+                    // self.upload_src = objUrl;
+                    self.gosubmit();
+                })
+            },
+            gosubmit() {
+                var formData = new FormData();
+                formData.append("file", $("#upload")[0].files[0]);
+                var user = window.localStorage.getItem("user");
+                var lastsession = user ? user : 0;
+                var timestamp = Date.parse(new Date()) / 1000;
+                formData.append("timestamp", timestamp);
+                formData.append("lastsession", lastsession);
+
+                $.ajax({
+                    url: http_url + "uploadImg",
+                    type: "post",
+                    data: formData,
+                    processData: false, // 告诉jQuery不要去处理发送的数据
+                    contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+                    dataType: 'text',
+                    success: (res) => {
+                        let data_res = JSON.parse(res);
+                        this.upload_src = this.uploadUrl + data_res.data;
+                        this.upload_src2 = data_res.data;
+                    },
+                    error: function(data) {
+
+                    }
+                });
+
+            },
+            getObjectURL(file) {
+                var url = null;
+                if (window.createObjectURL != undefined) { // basic
+                    url = window.createObjectURL(file);
+                } else if (window.URL != undefined) { // mozilla(firefox)
+                    url = window.URL.createObjectURL(file);
+                } else if (window.webkitURL != undefined) { // webkit or chrome
+                    url = window.webkitURL.createObjectURL(file);
+                }
+                return url;
+            },
+            back() {
+                window.history.go(-1)
+            },
+            buy_btn1() {
+                if (this.buy_num == this.qgsl) return;
+                this.buy_num--
+            },
+            buy_btn2() {
+                this.buy_num++
+            },
+            jump(e) {
+                $(location).attr('href', e);
+            }
+        },
+        created() {
+
+        }
+    })
+</script>
+
+</html>

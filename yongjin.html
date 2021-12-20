@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="static/css/yongjin.css" rel="stylesheet" type="text/css">
+    <title>我的佣金</title>
+</head>
+
+<body>
+    <div class="app" style="overflow: hidden;">
+        <div class="head">
+            <img @click="back()" class="back" src="static/image/back2.png">
+            <div style="margin-top: 20px;">我的佣金</div>
+            <div class="head_box">
+                <div>
+                    <div>￥{{team_order_commission}}</div>
+                    <div style="font-size: 14px;margin-top:10px;">佣金总数(元)</div>
+                </div>
+                <div>
+                    <div>￥{{level_one_order_commission}}</div>
+                    <div style="font-size: 14px;margin-top:10px;">下级总佣金(元)</div>
+                </div>
+            </div>
+        </div>
+        <div class="middle">
+            <div class="content">
+                <div style="padding-left: 16px;">
+                    <div class="item" v-for="(row,i) in data_arr">
+                        <img class="img" src="static/image/touxiang2.png">
+                        <div style="width: 100%;">
+                            <div class="item_box1">
+                                <div>{{row.nickname}}</div>
+                                <div style="font-size: 14px;color: #EF2929;">￥{{row.moneylog_money}}</div>
+                            </div>
+                            <div class="item_box2">
+                                <div>{{row.phone}}</div>
+                                <div>注册时间：{{row.created_at}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script type="text/javascript" src="static/js/jquery-3.1.1.min.js"></script>
+<script src="static/js/vue.js"></script>
+<script src="static/js/vue.min.js"></script>
+<script charset="utf-8" src="static_new/js/dialog.min.js"></script>
+<link rel="stylesheet" href="static_new/css/public.css">
+<script src="static/js/helper.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '.app',
+        data: {
+            team_order_commission: '', // 佣金总数
+            level_one_order_commission: '', // 下级总佣金
+            page: 0,
+            last_page: 1,
+            data_arr: []
+        },
+        mounted: function() {
+            this.loadData();
+        },
+        methods: {
+            loadData() {
+                this.page++;
+                if (this.page > this.last_page) {
+                    return
+                };
+                var loading = null;
+                loading = $(document).dialog({
+                    type: 'notice',
+                    infoIcon: 'static_new/img/loading.gif',
+                    infoText: '正在加载中',
+                    autoClose: 0
+                });
+                http_api.http_send('user/myCommission', {
+                        page: this.page
+                    }, 'POST',
+                    (res) => {
+                        loading.close();
+                        if (res.status) {
+                            this.last_page = res.data.detail.last_page
+                            this.team_order_commission = res.data.team_order_commission;
+                            this.level_one_order_commission = res.data.level_one_order_commission;
+                            for (let k in res.data.detail.data) {
+                                this.data_arr.push(res.data.detail.data[k])
+                            }
+                            console.log(this.data_arr)
+                        }
+                    });
+            },
+            back() {
+                window.history.go(-1)
+            },
+            look() {
+                this.choose = !this.choose;
+            },
+        },
+        created() {
+            $(window).scroll(() => {
+                if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+                    this.loadData();
+                }
+            });
+        }
+    })
+</script>
+
+</html>

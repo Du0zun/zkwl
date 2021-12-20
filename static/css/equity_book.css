@@ -1,0 +1,71 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.head {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #EBEBEB;
+    height: 40px;
+    position: relative;
+}
+
+.back {
+    width: 8px;
+    height: 15px;
+    position: absolute;
+    left: 20px;
+}
+
+.book {
+    background: url(../book/book.png) no-repeat;
+    background-size: 100% 100%;
+    /* #ifdef APP-PLUS */
+    min-height: 100vh;
+    padding: 0 40px;
+}
+
+.label {
+    width: 299px;
+    height: 96px;
+    margin-top: 56px;
+}
+
+.label2 {
+    color: #C4A252;
+    font-size: 18px;
+    font-weight: bold;
+    color: #C4A252;
+    text-align: center;
+    margin-top: 19px;
+}
+
+.title {
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 41px;
+}
+
+.contnt {
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 19px;
+    text-indent: 2em;
+}
+
+.label3 {
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-left: 15px;
+}
+
+.yin {
+    width: 135px;
+    height: 90px;
+    position: relative;
+    left: 175px;
+    top: -17px;
+}

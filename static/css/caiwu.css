@@ -1,0 +1,41 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #F7F7F7;
+}
+
+.select_box {
+    display: flex;
+    justify-content: space-between;
+    background-color: #FFFFFF;
+    color: #999999;
+}
+
+.select_item {
+    width: 33%;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+}
+
+.select_choose {
+    border-bottom: 1px solid #F23F5C;
+    color: #F23F5C;
+}
+
+.content {}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #EBEBEB;
+    height: 67px;
+    padding: 0 24px;
+}
+
+.item_title {
+    color: #389BF0;
+    margin-bottom: 5px;
+}
